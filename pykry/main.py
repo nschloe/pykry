@@ -38,17 +38,43 @@ class Solution(object):
         string += "    maxiter: {}\n".format(self.maxiter)
         string += "    iter: {}\n".format(self.iter)
         string += "    explicit residual: {}\n".format(self.explicit_residual)
-        string += "    resnorms: [{}, ..., {}]\n".format(self.resnorms[0], self.resnorms[-1])
+        string += "    resnorms: [{}, ..., {}]\n".format(
+            self.resnorms[0], self.resnorms[-1]
+        )
         string += "    x0: [{}, ..., {}]\n".format(self.x0[0], self.x0[-1])
         string += "    xk: [{}, ..., {}]".format(self.xk[0], self.xk[-1])
         return string
 
 
-def gmres(A, b):
+def gmres(
+    A,
+    b,
+    M=None,
+    Minv=None,
+    Ml=None,
+    Mr=None,
+    inner_product=None,
+    is_normal=False,
+    is_self_adjoint=False,
+    is_positive_definite=False,
+    exact_solution=None,
+    ortho="mgs",
+):
     assert len(A.shape) == 2
     assert A.shape[0] == A.shape[1]
     assert A.shape[1] == b.shape[0]
-    linear_system = LinearSystem(A=A, b=b)
-    out = Gmres(linear_system)
+    linear_system = LinearSystem(
+        A=A,
+        b=b,
+        M=M,
+        Minv=Minv,
+        Ml=Ml,
+        ip_B=inner_product,
+        normal=is_normal,
+        self_adjoint=is_self_adjoint,
+        positive_definite=is_positive_definite,
+        exact_solution=exact_solution,
+    )
+    out = Gmres(linear_system, ortho=ortho)
     sol = Solution(out)
     return sol
