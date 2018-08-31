@@ -7,6 +7,7 @@ from .__about__ import __author__, __email__, __license__, __version__, __status
 from .linear_operator import LinearOperator
 from .cg import cg
 from .gmres import gmres
+from .minres import minres
 
 __all__ = [
     "__author__",
@@ -16,6 +17,7 @@ __all__ = [
     "__status__",
     "cg",
     "gmres",
+    "minres",
     "LinearOperator",
 ]
 
