@@ -13,11 +13,11 @@ def test_cg():
     print(out)
 
     ref = 1004.1873775173957
-    assert abs(numpy.sum(numpy.abs(out.xk)) - ref) < 1.0e-14 * ref
+    assert abs(numpy.sum(numpy.abs(out.xk)) - ref) < 1.0e-12 * ref
     ref = 1000.0003174916551
-    assert abs(numpy.sqrt(numpy.dot(out.xk, out.xk)) - ref) < 1.0e-14 * ref
+    assert abs(numpy.sqrt(numpy.dot(out.xk, out.xk)) - ref) < 1.0e-12 * ref
     ref = 999.9999999997555
-    assert abs(numpy.max(numpy.abs(out.xk)) - ref) < 1.0e-14 * ref
+    assert abs(numpy.max(numpy.abs(out.xk)) - ref) < 1.0e-12 * ref
     return
 
 
@@ -33,9 +33,9 @@ def test_cg_linear_operator():
     out = pykry.cg(linear_operator, b)
 
     ref = 1004.1873775173957
-    assert abs(numpy.sum(numpy.abs(out.xk)) - ref) < 1.0e-14 * ref
+    assert abs(numpy.sum(numpy.abs(out.xk)) - ref) < 1.0e-12 * ref
     ref = 1000.0003174916551
-    assert abs(numpy.sqrt(numpy.dot(out.xk, out.xk)) - ref) < 1.0e-14 * ref
+    assert abs(numpy.sqrt(numpy.dot(out.xk, out.xk)) - ref) < 1.0e-12 * ref
     ref = 999.9999999997555
-    assert abs(numpy.max(numpy.abs(out.xk)) - ref) < 1.0e-14 * ref
+    assert abs(numpy.max(numpy.abs(out.xk)) - ref) < 1.0e-12 * ref
     return

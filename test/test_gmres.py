@@ -12,11 +12,11 @@ def test_gmres():
     out = pykry.gmres(A, b)
 
     ref = 1004.1873724888546
-    assert abs(numpy.sum(numpy.abs(out.xk)) - ref) < 1.0e-14 * ref
+    assert abs(numpy.sum(numpy.abs(out.xk)) - ref) < 1.0e-12 * ref
     ref = 1000000.6249262823
-    assert abs(numpy.dot(out.xk, out.xk) - ref) < 1.0e-14 * ref
+    assert abs(numpy.dot(out.xk, out.xk) - ref) < 1.0e-12 * ref
     ref = 999.999994971191
-    assert abs(numpy.max(numpy.abs(out.xk)) - ref) < 1.0e-14 * ref
+    assert abs(numpy.max(numpy.abs(out.xk)) - ref) < 1.0e-12 * ref
     return out
 
 
@@ -33,11 +33,11 @@ def test_gmres_linear_operator():
     print(out)
 
     ref = 1004.1873724888546
-    assert abs(numpy.sum(numpy.abs(out.xk)) - ref) < 1.0e-14 * ref
+    assert abs(numpy.sum(numpy.abs(out.xk)) - ref) < 1.0e-12 * ref
     ref = 1000000.6249262823
-    assert abs(numpy.dot(out.xk, out.xk) - ref) < 1.0e-14 * ref
+    assert abs(numpy.dot(out.xk, out.xk) - ref) < 1.0e-12 * ref
     ref = 999.999994971191
-    assert abs(numpy.max(numpy.abs(out.xk)) - ref) < 1.0e-14 * ref
+    assert abs(numpy.max(numpy.abs(out.xk)) - ref) < 1.0e-12 * ref
     return
 
 

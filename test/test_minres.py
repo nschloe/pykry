@@ -13,11 +13,11 @@ def test_minres():
     print(out)
 
     ref = 1004.187372488912
-    assert abs(numpy.sum(numpy.abs(out.xk)) - ref) < 1.0e-14 * ref
+    assert abs(numpy.sum(numpy.abs(out.xk)) - ref) < 1.0e-12 * ref
     ref = 1000.0003124632159
-    assert abs(numpy.sqrt(numpy.dot(out.xk, out.xk)) - ref) < 1.0e-14 * ref
+    assert abs(numpy.sqrt(numpy.dot(out.xk, out.xk)) - ref) < 1.0e-12 * ref
     ref = 999.9999949713145
-    assert abs(numpy.max(numpy.abs(out.xk)) - ref) < 1.0e-14 * ref
+    assert abs(numpy.max(numpy.abs(out.xk)) - ref) < 1.0e-12 * ref
     return
 
 
@@ -33,9 +33,9 @@ def test_minres_linear_operator():
     out = pykry.minres(linear_operator, b)
 
     ref = 1004.187372488912
-    assert abs(numpy.sum(numpy.abs(out.xk)) - ref) < 1.0e-14 * ref
+    assert abs(numpy.sum(numpy.abs(out.xk)) - ref) < 1.0e-12 * ref
     ref = 1000.0003124632159
-    assert abs(numpy.sqrt(numpy.dot(out.xk, out.xk)) - ref) < 1.0e-14 * ref
+    assert abs(numpy.sqrt(numpy.dot(out.xk, out.xk)) - ref) < 1.0e-12 * ref
     ref = 999.9999949713145
-    assert abs(numpy.max(numpy.abs(out.xk)) - ref) < 1.0e-14 * ref
+    assert abs(numpy.max(numpy.abs(out.xk)) - ref) < 1.0e-12 * ref
     return
