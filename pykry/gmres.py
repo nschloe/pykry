@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 #
-from krypy.linsys import LinearSystem, Gmres
+from krypy.linsys import LinearSystem, Gmres as KrypyGmres
 
 from .linear_operator import wrap, LinearOperator
 
 
-class Solution(object):
+class Gmres(object):
     def __init__(self, obj):
         self.MMlr0 = obj.MMlr0[:, 0]
         self.MMlr0_norm = obj.MMlr0_norm
@@ -81,6 +81,6 @@ def gmres(
         positive_definite=is_positive_definite,
         exact_solution=exact_solution,
     )
-    out = Gmres(linear_system, ortho=ortho)
-    sol = Solution(out)
+    out = KrypyGmres(linear_system, ortho=ortho)
+    sol = Gmres(out)
     return sol

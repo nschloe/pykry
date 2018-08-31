@@ -11,11 +11,15 @@ class LinearOperator(object):
         self.dot_adj = dot_adj
         return
 
+    def __mul__(self, X):
+        return self.dot(X)
+
 
 def wrap(linear_operator):
     """Wrap a pykry LinearOperator in a KryPy LinearOperator. This is essentially just
     reshaping.
     """
+
     def dot(X):
         assert X.shape[1] == 1
         out = linear_operator.dot(X[:, 0])
