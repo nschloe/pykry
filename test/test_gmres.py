@@ -17,7 +17,7 @@ def test_gmres():
     assert abs(numpy.dot(out.xk, out.xk) - ref) < 1.0e-14 * ref
     ref = 999.999994971191
     assert abs(numpy.max(numpy.abs(out.xk)) - ref) < 1.0e-14 * ref
-    return
+    return out
 
 
 def test_gmres_linear_operator():
@@ -39,3 +39,15 @@ def test_gmres_linear_operator():
     ref = 999.999994971191
     assert abs(numpy.max(numpy.abs(out.xk)) - ref) < 1.0e-14 * ref
     return
+
+
+if __name__ == "__main__":
+    import matplotlib.pyplot as plt
+
+    out = test_gmres()
+    plt.semilogy(out.resnorms)
+    plt.grid()
+    plt.xlabel("Iteration $k$")
+    plt.ylabel(r"Relative residual norm $||r_k||/||b||$")
+    # plt.show()
+    plt.savefig("out.png", transparent=True, bbox_inches="tight")

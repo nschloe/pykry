@@ -6,13 +6,27 @@
 [![PyPi Version](https://img.shields.io/pypi/v/pykry.svg)](https://pypi.org/project/pykry)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/pykry.svg?logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/pykry)
 
-Some description.
+pykry is a thin wrapper around [KryPy](https://github.com/andrenarchy/krypy) that makes
+using Krylov subspace methods in Python a little more convenient. Simply create the
+matrix and the right-hand side, then fire it up:
+```python
+A = numpy.diag([1.0e-3] + list(range(2, 101)))
+b = numpy.ones(100)
 
-Run
+# out = pykry.cg(A, b)
+# out = pykry.minres(A, b)
+out = pykry.gmres(A, b)
+
+# out.xk contains the last iterate (ideally the solution),
+# out.resnorms the relative residual norms;
+# there's plenty more
 ```
-find . -type f -print0 | xargs -0 sed -i 's/pykry/your-project-name/g'
-```
-to customize.
+![convergence](https://nschloe.github.io/dmsh/conv.png)
+
+Owing to KryPy, pykry has a plethora of extra parameters to hand to either one of the
+methods.
+
+
 
 ### Installation
 
