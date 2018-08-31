@@ -23,7 +23,7 @@ setup(
     url="https://github.com/nschloe/pykry",
     author=about["__author__"],
     author_email=about["__email__"],
-    install_requires=[],
+    install_requires=["krypy"],
     description="Convenience wrapper for KryPy",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
