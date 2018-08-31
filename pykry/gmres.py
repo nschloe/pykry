@@ -2,6 +2,8 @@
 #
 from krypy.linsys import LinearSystem, Gmres
 
+from .linear_operator import wrap, LinearOperator
+
 
 class Solution(object):
     def __init__(self, obj):
@@ -63,6 +65,10 @@ def gmres(
     assert len(A.shape) == 2
     assert A.shape[0] == A.shape[1]
     assert A.shape[1] == b.shape[0]
+
+    if isinstance(A, LinearOperator):
+        A = wrap(A)
+
     linear_system = LinearSystem(
         A=A,
         b=b,

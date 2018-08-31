@@ -4,7 +4,8 @@ from __future__ import print_function
 
 from .__about__ import __author__, __email__, __license__, __version__, __status__
 
-from .main import gmres
+from .linear_operator import LinearOperator
+from .gmres import gmres
 
 __all__ = [
     "__author__",
@@ -13,6 +14,7 @@ __all__ = [
     "__version__",
     "__status__",
     "gmres",
+    "LinearOperator",
 ]
 
 # try:
