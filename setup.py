@@ -24,7 +24,7 @@ setup(
     author=about["__author__"],
     author_email=about["__email__"],
     install_requires=[],
-    description="Python project scaffold",
+    description="Convenience wrapper for KryPy",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
     license=about["__license__"],
@@ -38,10 +38,4 @@ setup(
         "Topic :: Scientific/Engineering",
         "Topic :: Scientific/Engineering :: Mathematics",
     ],
-    entry_points={
-        "console_scripts": [
-            "pykry-image = pykry.cli:image",
-            "pykry-poly = pykry.cli:poly",
-        ]
-    },
 )
