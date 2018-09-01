@@ -13,8 +13,8 @@ def test_gmres():
 
     ref = 1004.1873724888546
     assert abs(numpy.sum(numpy.abs(out.xk)) - ref) < 1.0e-12 * ref
-    ref = 1000000.6249262823
-    assert abs(numpy.dot(out.xk, out.xk) - ref) < 1.0e-12 * ref
+    ref = 1000.0003124630923
+    assert abs(numpy.sqrt(numpy.dot(out.xk, out.xk)) - ref) < 1.0e-12 * ref
     ref = 999.999994971191
     assert abs(numpy.max(numpy.abs(out.xk)) - ref) < 1.0e-12 * ref
     return out
@@ -34,8 +34,8 @@ def test_gmres_linear_operator():
 
     ref = 1004.1873724888546
     assert abs(numpy.sum(numpy.abs(out.xk)) - ref) < 1.0e-12 * ref
-    ref = 1000000.6249262823
-    assert abs(numpy.dot(out.xk, out.xk) - ref) < 1.0e-12 * ref
+    ref = 1000.0003124630923
+    assert abs(numpy.sqrt(numpy.dot(out.xk, out.xk)) - ref) < 1.0e-12 * ref
     ref = 999.999994971191
     assert abs(numpy.max(numpy.abs(out.xk)) - ref) < 1.0e-12 * ref
     return
