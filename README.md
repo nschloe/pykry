@@ -1,4 +1,4 @@
-# python-project-scaffold
+# pykry
 
 [![CircleCI](https://img.shields.io/circleci/project/github/nschloe/pykry/master.svg)](https://circleci.com/gh/nschloe/pykry/tree/master)
 [![codecov](https://img.shields.io/codecov/c/github/nschloe/pykry.svg)](https://codecov.io/gh/nschloe/pykry)
