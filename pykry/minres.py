@@ -2,7 +2,7 @@
 #
 from krypy.linsys import LinearSystem, Minres as KrypyMinres
 
-from .linear_operator import wrap, LinearOperator
+from .linear_operator import LinearOperator, wrap_linear_operator
 
 
 class Minres(object):
@@ -66,7 +66,7 @@ def minres(
     assert A.shape[1] == b.shape[0]
 
     if isinstance(A, LinearOperator):
-        A = wrap(A)
+        A = wrap_linear_operator(A)
 
     linear_system = LinearSystem(
         A=A,
