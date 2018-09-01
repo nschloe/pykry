@@ -43,7 +43,20 @@ class Cg(object):
 
 
 def cg(
-    A, b, M=None, Minv=None, Ml=None, Mr=None, inner_product=None, exact_solution=None
+    A,
+    b,
+    M=None,
+    Minv=None,
+    Ml=None,
+    Mr=None,
+    inner_product=None,
+    exact_solution=None,
+    x0=None,
+    tol=1e-5,
+    maxiter=None,
+    use_explicit_residual=False,
+    store_arnoldi=False,
+    dtype=None,
 ):
     assert len(A.shape) == 2
     assert A.shape[0] == A.shape[1]
@@ -64,6 +77,14 @@ def cg(
         positive_definite=True,
         exact_solution=exact_solution,
     )
-    out = KrypyCg(linear_system)
+    out = KrypyCg(
+        linear_system,
+        x0=x0,
+        tol=tol,
+        maxiter=maxiter,
+        explicit_residual=use_explicit_residual,
+        store_arnoldi=store_arnoldi,
+        dtype=dtype,
+    )
     sol = Cg(out)
     return sol
