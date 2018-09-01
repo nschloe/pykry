@@ -58,6 +58,12 @@ def gmres(
     inner_product=None,
     exact_solution=None,
     ortho="mgs",
+    x0=None,
+    tol=1e-5,
+    maxiter=None,
+    explicit_residual=False,
+    store_arnoldi=False,
+    dtype=None,
 ):
     assert len(A.shape) == 2
     assert A.shape[0] == A.shape[1]
@@ -75,6 +81,15 @@ def gmres(
         ip_B=inner_product,
         exact_solution=exact_solution,
     )
-    out = KrypyGmres(linear_system, ortho=ortho)
+    out = KrypyGmres(
+        linear_system,
+        ortho=ortho,
+        x0=x0,
+        tol=tol,
+        maxiter=maxiter,
+        explicit_residual=explicit_residual,
+        store_arnoldi=store_arnoldi,
+        dtype=dtype,
+    )
     sol = Gmres(out)
     return sol
