@@ -61,7 +61,7 @@ def gmres(
     x0=None,
     tol=1e-5,
     maxiter=None,
-    explicit_residual=False,
+    use_explicit_residual=False,
     store_arnoldi=False,
     dtype=None,
 ):
@@ -87,7 +87,7 @@ def gmres(
         x0=x0,
         tol=tol,
         maxiter=maxiter,
-        explicit_residual=explicit_residual,
+        explicit_residual=use_explicit_residual,
         store_arnoldi=store_arnoldi,
         dtype=dtype,
     )
