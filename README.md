@@ -10,6 +10,9 @@ pykry is a thin wrapper around [KryPy](https://github.com/andrenarchy/krypy) tha
 using Krylov subspace methods in Python a little more convenient. Simply create the
 matrix and the right-hand side, then fire it up:
 ```python
+import numpy
+import pykry
+
 A = numpy.diag([1.0e-3] + list(range(2, 101)))
 b = numpy.ones(100)
 
@@ -21,10 +24,27 @@ out = pykry.gmres(A, b)
 # out.resnorms the relative residual norms;
 # there's plenty more
 ```
-![convergence](https://nschloe.github.io/dmsh/conv.png)
+![convergence](https://nschloe.github.io/pykry/conv.png)
 
 Owing to KryPy, pykry has a plethora of extra parameters to hand to either one of the
 methods.
+
+Getting more fancy with linear operators is as easy as defining a matrix-vector
+multiplication:
+```python
+import numpy
+import pykry
+
+n = 100
+A = numpy.diag([1.0e-3] + list(range(2, n + 1)))
+
+def dot(x):
+  return A.dot(x)
+
+linear_operator = pykry.LinearOperator((n, n), float, dot=lambda x: dot, dot_adj=dot)
+b = numpy.ones(n)
+out = pykry.cg(linear_operator, b)
+```
 
 
 
