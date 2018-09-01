@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 from krypy.utils import LinearOperator as KrypyLinearOperator
+import numpy
 
 
 class LinearOperator(object):
@@ -15,7 +16,7 @@ class LinearOperator(object):
         return self.dot(X)
 
 
-def wrap(linear_operator):
+def wrap_linear_operator(linear_operator):
     """Wrap a pykry LinearOperator in a KryPy LinearOperator. This is essentially just
     reshaping.
     """
@@ -33,3 +34,10 @@ def wrap(linear_operator):
     return KrypyLinearOperator(
         linear_operator.shape, linear_operator.dtype, dot, dot_adj
     )
+
+
+def wrap_inner_product(inner):
+    def _wrap(a, b):
+        return numpy.array([[inner(a[:, 0], b[:, 0])]])
+
+    return _wrap

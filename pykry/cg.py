@@ -2,7 +2,7 @@
 #
 from krypy.linsys import LinearSystem, Cg as KrypyCg
 
-from .linear_operator import wrap, LinearOperator
+from .linear_operator import LinearOperator, wrap_linear_operator, wrap_inner_product
 
 
 class Cg(object):
@@ -63,7 +63,10 @@ def cg(
     assert A.shape[1] == b.shape[0]
 
     if isinstance(A, LinearOperator):
-        A = wrap(A)
+        A = wrap_linear_operator(A)
+
+    if inner_product:
+        inner_product = wrap_inner_product(inner_product)
 
     linear_system = LinearSystem(
         A=A,
