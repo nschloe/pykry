@@ -56,9 +56,6 @@ def gmres(
     Ml=None,
     Mr=None,
     inner_product=None,
-    is_normal=False,
-    is_self_adjoint=False,
-    is_positive_definite=False,
     exact_solution=None,
     ortho="mgs",
 ):
@@ -76,9 +73,6 @@ def gmres(
         Minv=Minv,
         Ml=Ml,
         ip_B=inner_product,
-        normal=is_normal,
-        self_adjoint=is_self_adjoint,
-        positive_definite=is_positive_definite,
         exact_solution=exact_solution,
     )
     out = KrypyGmres(linear_system, ortho=ortho)

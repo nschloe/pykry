@@ -52,9 +52,6 @@ def minres(
     Ml=None,
     Mr=None,
     inner_product=None,
-    is_normal=True,
-    is_self_adjoint=True,
-    is_positive_definite=False,
     exact_solution=None,
     ortho="mgs",
 ):
@@ -72,9 +69,8 @@ def minres(
         Minv=Minv,
         Ml=Ml,
         ip_B=inner_product,
-        normal=is_normal,
-        self_adjoint=is_self_adjoint,
-        positive_definite=is_positive_definite,
+        # setting self_adjoin=True avoids a warning
+        self_adjoint=True,
         exact_solution=exact_solution,
     )
     out = KrypyMinres(linear_system, ortho=ortho)

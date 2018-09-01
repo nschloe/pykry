@@ -43,17 +43,7 @@ class Cg(object):
 
 
 def cg(
-    A,
-    b,
-    M=None,
-    Minv=None,
-    Ml=None,
-    Mr=None,
-    inner_product=None,
-    is_normal=True,
-    is_self_adjoint=True,
-    is_positive_definite=True,
-    exact_solution=None,
+    A, b, M=None, Minv=None, Ml=None, Mr=None, inner_product=None, exact_solution=None
 ):
     assert len(A.shape) == 2
     assert A.shape[0] == A.shape[1]
@@ -69,9 +59,9 @@ def cg(
         Minv=Minv,
         Ml=Ml,
         ip_B=inner_product,
-        normal=is_normal,
-        self_adjoint=is_self_adjoint,
-        positive_definite=is_positive_definite,
+        # Setting those to `True` simply avoids a warning.
+        self_adjoint=True,
+        positive_definite=True,
         exact_solution=exact_solution,
     )
     out = KrypyCg(linear_system)
