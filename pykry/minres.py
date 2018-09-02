@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from krypy.linsys import LinearSystem, Minres as KrypyMinres
+from krypy.linsys import LinearSystem
+from krypy.deflation import DeflatedMinres as KrypyMinres
 
 from .linear_operator import LinearOperator, wrap_linear_operator, wrap_inner_product
 
@@ -55,11 +56,11 @@ def minres(
     exact_solution=None,
     ortho="mgs",
     x0=None,
+    U=None,
     tol=1e-5,
     maxiter=None,
     use_explicit_residual=False,
     store_arnoldi=False,
-    dtype=None,
 ):
     assert len(A.shape) == 2
     assert A.shape[0] == A.shape[1]
@@ -80,6 +81,12 @@ def minres(
     if inner_product:
         inner_product = wrap_inner_product(inner_product)
 
+    # Make sure that the input vectors have two dimensions
+    if U is not None:
+        U = U.reshape(U.shape[0], -1)
+    if x0 is not None:
+        x0 = x0.reshape(U.shape[0], -1)
+
     linear_system = LinearSystem(
         A=A,
         b=b,
@@ -95,11 +102,11 @@ def minres(
         linear_system,
         ortho=ortho,
         x0=x0,
+        U=U,
         tol=tol,
         maxiter=maxiter,
         explicit_residual=use_explicit_residual,
         store_arnoldi=store_arnoldi,
-        dtype=dtype,
     )
     sol = Minres(out)
     return sol
