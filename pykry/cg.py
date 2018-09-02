@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 from krypy.linsys import LinearSystem, Cg as KrypyCg
+from krypy.deflation import DeflatedCg as KrypyDeflatedCg
 
 from .linear_operator import LinearOperator, wrap_linear_operator, wrap_inner_product
 
@@ -52,11 +53,11 @@ def cg(
     inner_product=None,
     exact_solution=None,
     x0=None,
+    U=None,
     tol=1e-5,
     maxiter=None,
     use_explicit_residual=False,
     store_arnoldi=False,
-    dtype=None,
 ):
     assert len(A.shape) == 2
     assert A.shape[0] == A.shape[1]
@@ -65,8 +66,26 @@ def cg(
     if isinstance(A, LinearOperator):
         A = wrap_linear_operator(A)
 
+    if isinstance(M, LinearOperator):
+        M = wrap_linear_operator(M)
+
+    if isinstance(Minv, LinearOperator):
+        Minv = wrap_linear_operator(Minv)
+
+    if isinstance(Ml, LinearOperator):
+        Ml = wrap_linear_operator(Ml)
+
+    if isinstance(Mr, LinearOperator):
+        Mr = wrap_linear_operator(Mr)
+
     if inner_product:
         inner_product = wrap_inner_product(inner_product)
+
+    # Make sure that the input vectors have two dimensions
+    if U is not None:
+        U = U.reshape(U.shape[0], -1)
+    if x0 is not None:
+        x0 = x0.reshape(U.shape[0], -1)
 
     linear_system = LinearSystem(
         A=A,
@@ -80,14 +99,25 @@ def cg(
         positive_definite=True,
         exact_solution=exact_solution,
     )
-    out = KrypyCg(
-        linear_system,
-        x0=x0,
-        tol=tol,
-        maxiter=maxiter,
-        explicit_residual=use_explicit_residual,
-        store_arnoldi=store_arnoldi,
-        dtype=dtype,
-    )
+    if U is None:
+        out = KrypyCg(
+            linear_system,
+            x0=x0,
+            tol=tol,
+            maxiter=maxiter,
+            explicit_residual=use_explicit_residual,
+            store_arnoldi=store_arnoldi,
+        )
+    else:
+        out = KrypyDeflatedCg(
+            linear_system,
+            x0=x0,
+            U=U,
+            tol=tol,
+            maxiter=maxiter,
+            explicit_residual=use_explicit_residual,
+            store_arnoldi=store_arnoldi,
+        )
+
     sol = Cg(out)
     return sol
