@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from krypy.linsys import LinearSystem
-from krypy.deflation import DeflatedMinres as KrypyMinres
+from krypy.linsys import LinearSystem, Minres as KrypyMinres
+from krypy.deflation import DeflatedMinres as KrypyDeflatedMinres
 
 from .linear_operator import LinearOperator, wrap_linear_operator, wrap_inner_product
 
@@ -72,6 +72,9 @@ def minres(
     if isinstance(M, LinearOperator):
         M = wrap_linear_operator(M)
 
+    if isinstance(Minv, LinearOperator):
+        Minv = wrap_linear_operator(Minv)
+
     if isinstance(Ml, LinearOperator):
         Ml = wrap_linear_operator(Ml)
 
@@ -98,15 +101,27 @@ def minres(
         self_adjoint=True,
         exact_solution=exact_solution,
     )
-    out = KrypyMinres(
-        linear_system,
-        ortho=ortho,
-        x0=x0,
-        U=U,
-        tol=tol,
-        maxiter=maxiter,
-        explicit_residual=use_explicit_residual,
-        store_arnoldi=store_arnoldi,
-    )
+    if U is None:
+        out = KrypyMinres(
+            linear_system,
+            ortho=ortho,
+            x0=x0,
+            tol=tol,
+            maxiter=maxiter,
+            explicit_residual=use_explicit_residual,
+            store_arnoldi=store_arnoldi,
+        )
+    else:
+        out = KrypyDeflatedMinres(
+            linear_system,
+            ortho=ortho,
+            x0=x0,
+            U=U,
+            tol=tol,
+            maxiter=maxiter,
+            explicit_residual=use_explicit_residual,
+            store_arnoldi=store_arnoldi,
+        )
+
     sol = Minres(out)
     return sol

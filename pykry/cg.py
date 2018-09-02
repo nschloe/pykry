@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from krypy.linsys import LinearSystem
-from krypy.deflation import DeflatedCg as KrypyCg
+from krypy.linsys import LinearSystem, Cg as KrypyCg
+from krypy.deflation import DeflatedCg as KrypyDeflatedCg
 
 from .linear_operator import LinearOperator, wrap_linear_operator, wrap_inner_product
 
@@ -69,6 +69,9 @@ def cg(
     if isinstance(M, LinearOperator):
         M = wrap_linear_operator(M)
 
+    if isinstance(Minv, LinearOperator):
+        Minv = wrap_linear_operator(Minv)
+
     if isinstance(Ml, LinearOperator):
         Ml = wrap_linear_operator(Ml)
 
@@ -96,14 +99,25 @@ def cg(
         positive_definite=True,
         exact_solution=exact_solution,
     )
-    out = KrypyCg(
-        linear_system,
-        x0=x0,
-        U=U,
-        tol=tol,
-        maxiter=maxiter,
-        explicit_residual=use_explicit_residual,
-        store_arnoldi=store_arnoldi,
-    )
+    if U is None:
+        out = KrypyCg(
+            linear_system,
+            x0=x0,
+            tol=tol,
+            maxiter=maxiter,
+            explicit_residual=use_explicit_residual,
+            store_arnoldi=store_arnoldi,
+        )
+    else:
+        out = KrypyDeflatedCg(
+            linear_system,
+            x0=x0,
+            U=U,
+            tol=tol,
+            maxiter=maxiter,
+            explicit_residual=use_explicit_residual,
+            store_arnoldi=store_arnoldi,
+        )
+
     sol = Cg(out)
     return sol

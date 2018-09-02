@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from krypy.linsys import LinearSystem
-from krypy.deflation import DeflatedGmres as KrypyGmres
+from krypy.linsys import LinearSystem, Gmres as KrypyGmres
+from krypy.deflation import DeflatedGmres as KrypyDeflatedGmres
 
 from .linear_operator import LinearOperator, wrap_linear_operator, wrap_inner_product
 
@@ -76,6 +76,9 @@ def gmres(
     if isinstance(M, LinearOperator):
         M = wrap_linear_operator(M)
 
+    if isinstance(Minv, LinearOperator):
+        Minv = wrap_linear_operator(Minv)
+
     if isinstance(Ml, LinearOperator):
         Ml = wrap_linear_operator(Ml)
 
@@ -100,15 +103,27 @@ def gmres(
         ip_B=inner_product,
         exact_solution=exact_solution,
     )
-    out = KrypyGmres(
-        linear_system,
-        ortho=ortho,
-        x0=x0,
-        U=U,
-        tol=tol,
-        maxiter=maxiter,
-        explicit_residual=use_explicit_residual,
-        store_arnoldi=store_arnoldi,
-    )
+    if U is None:
+        out = KrypyGmres(
+            linear_system,
+            ortho=ortho,
+            x0=x0,
+            tol=tol,
+            maxiter=maxiter,
+            explicit_residual=use_explicit_residual,
+            store_arnoldi=store_arnoldi,
+        )
+    else:
+        out = KrypyDeflatedGmres(
+            linear_system,
+            ortho=ortho,
+            x0=x0,
+            U=U,
+            tol=tol,
+            maxiter=maxiter,
+            explicit_residual=use_explicit_residual,
+            store_arnoldi=store_arnoldi,
+        )
+
     sol = Gmres(out)
     return sol
