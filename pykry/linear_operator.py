@@ -38,6 +38,8 @@ def wrap_linear_operator(linear_operator):
 
 def wrap_inner_product(inner):
     def _wrap(a, b):
+        if a.shape[1] == 0:
+            return numpy.array([[]]).T
         return numpy.array([[inner(a[:, 0], b[:, 0])]])
 
     return _wrap

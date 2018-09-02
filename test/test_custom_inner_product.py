@@ -6,8 +6,9 @@ import pykry
 
 
 def test_custom_inner_product():
-    A = numpy.diag([1.0e-3] + list(range(2, 101)))
-    b = numpy.ones(100)
+    n = 100
+    A = numpy.diag([1.0e-3] + list(range(2, n + 1)))
+    b = numpy.ones(n)
 
     def inner(a, b):
         return numpy.dot(a, b)
