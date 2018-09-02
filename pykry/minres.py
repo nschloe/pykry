@@ -68,6 +68,15 @@ def minres(
     if isinstance(A, LinearOperator):
         A = wrap_linear_operator(A)
 
+    if isinstance(M, LinearOperator):
+        M = wrap_linear_operator(M)
+
+    if isinstance(Ml, LinearOperator):
+        Ml = wrap_linear_operator(Ml)
+
+    if isinstance(Mr, LinearOperator):
+        Mr = wrap_linear_operator(Mr)
+
     if inner_product:
         inner_product = wrap_inner_product(inner_product)
 
